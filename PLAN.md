@@ -8,7 +8,7 @@ This checklist captures the initial plan for turning this repository into the so
 - [x] Add `specs/bun.spec`.
 - [ ] Add `specs/open-code.spec`.
 - [x] Add a repository license file.
-- [ ] Add a GitHub Actions workflow at `.github/workflows/check.yml`.
+- [x] Add a GitHub Actions workflow at `.github/workflows/check.yml`.
 - [ ] Add `renovate.json` for version update automation.
 
 ## Scope and policy

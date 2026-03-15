@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-24.04
+    container: fedora:42
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install RPM tooling
+        run: dnf install -y git rpmlint rpmdevtools rpm-build unzip
+
+      - name: Run rpmlint
+        run: rpmlint specs/ --strict
+
+      - name: Build RPMs
+        run: |
+          for file in specs/*.spec; do
+            echo "Building ${file}..."
+            spectool -Rg "${file}"
+            rpmbuild -ba "${file}"
+          done
