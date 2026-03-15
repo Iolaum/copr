@@ -2,6 +2,17 @@
 
 This repository contains the packaging metadata and automation needed to publish selected upstream software through Fedora COPR.
 
+## Current status
+
+The active COPR project is:
+
+- `iolaum/aitoolkit`
+- `https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/`
+
+Current published package status:
+
+- `bun` has been built successfully for `fedora-43-x86_64`
+
 ## Scope
 
 The repository is intentionally focused on packaging and publication, not on mirroring upstream source trees or storing a hand-managed RPM repository.
@@ -40,6 +51,31 @@ The initial package set is:
 
 This favors performance on modern `x86_64` systems over backward compatibility with older CPUs.
 
+Current Bun deployment status:
+
+- COPR package name: `bun`
+- current working chroot: `fedora-43-x86_64`
+- source package method: COPR SCM build from this repository
+
+Install on Fedora:
+
+```bash
+sudo dnf copr enable iolaum/aitoolkit
+sudo dnf install bun
+```
+
+or in Fedora Silverblue:
+
+```
+sudo curl -Lo /etc/yum.repos.d/iolaum-aitoolkit.repo \
+  https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/repo/fedora-$(rpm -E %fedora)/iolaum-aitoolkit-fedora-$(rpm -E %fedora).repo
+sudo rpm-ostree install bun
+```
+
+Project page:
+
+- `https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/`
+
 ### open-code
 
 `open-code` refers to the upstream opencode desktop application package.
@@ -71,3 +107,15 @@ The intended workflow is:
 4. let COPR generate and host repository metadata for Fedora users
 
 This replaces the local workflow of downloading release files, renaming them manually, and running `createrepo_c` by hand.
+
+## Local validation
+
+The repository uses GitHub Actions to validate spec changes.
+
+The current validation flow is:
+
+```bash
+rpmlint specs/ --strict
+spectool -Rg specs/*.spec
+rpmbuild -ba specs/*.spec
+```

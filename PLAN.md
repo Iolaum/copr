@@ -16,8 +16,8 @@ This checklist captures the initial plan for turning this repository into the so
 - [x] Keep this repository focused on packaging metadata and automation.
 - [x] Do not commit upstream release artifacts into git.
 - [x] Let COPR fetch upstream sources and release files via spec `Source:` URLs.
-- [ ] Use COPR SCM builds so Fedora infrastructure builds from this repository directly.
-- [ ] Replace the local `createrepo_c` workflow with COPR-hosted repository metadata.
+- [x] Use COPR SCM builds so Fedora infrastructure builds from this repository directly.
+- [x] Replace the local `createrepo_c` workflow with COPR-hosted repository metadata.
 
 ## bun packaging
 
@@ -44,26 +44,26 @@ This checklist captures the initial plan for turning this repository into the so
 
 ## CI and local validation
 
-- [ ] Run `rpmlint` on all spec files in CI.
-- [ ] Run `spectool -Rg` in CI to verify source URLs.
-- [ ] Run `rpmbuild -ba` in CI for all spec files.
-- [ ] Make the CI workflow fail on invalid specs or broken source URLs.
-- [ ] Document the local validation commands in `README.md`.
+- [x] Run `rpmlint` on all spec files in CI.
+- [x] Run `spectool -Rg` in CI to verify source URLs.
+- [x] Run `rpmbuild -ba` in CI for all spec files.
+- [x] Make the CI workflow fail on invalid specs or broken source URLs.
+- [x] Document the local validation commands in `README.md`.
 
 ## COPR setup
 
-- [ ] Create a COPR project for this repository.
-- [ ] Enable the desired Fedora chroots.
-- [ ] Add an SCM package for `bun`.
+- [x] Create a COPR project for this repository.
+- [x] Enable the desired Fedora chroots.
+- [x] Add an SCM package for `bun`.
 - [ ] Add an SCM package for `open-code`.
-- [ ] Configure each SCM package to point at this git repository.
-- [ ] Set the correct spec path for each package in COPR.
+- [x] Configure each SCM package to point at this git repository.
+- [x] Set the correct spec path for each package in COPR.
 - [ ] Enable auto-rebuilds or webhook-triggered rebuilds where appropriate.
-- [ ] Verify that successful builds appear in the published COPR repository.
+- [x] Verify that successful builds appear in the published COPR repository.
 
 ## Rollout order
 
-- [ ] Implement `bun` for `x86_64` first.
+- [x] Implement `bun` for `x86_64` first.
 - [ ] Add `bun` for `aarch64`.
 - [ ] Implement `open-code` for `x86_64`.
 - [ ] Add `open-code` for `aarch64`.
@@ -71,7 +71,7 @@ This checklist captures the initial plan for turning this repository into the so
 
 ## Follow-up documentation
 
-- [ ] Add package-specific notes to `README.md` once the first specs exist.
+- [x] Add package-specific notes to `README.md` once the first specs exist.
 - [ ] Document how version bumps should be performed.
-- [ ] Document how users enable the resulting COPR repository.
-- [ ] Document known limitations for CPU architecture and upstream packaging choices.
+- [x] Document how users enable the resulting COPR repository.
+- [x] Document known limitations for CPU architecture and upstream packaging choices.
