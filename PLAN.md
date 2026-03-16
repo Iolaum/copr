@@ -39,7 +39,9 @@ This checklist captures the initial plan for turning this repository into the so
 - [ ] Support `aarch64` as the secondary architecture.
 - [ ] Confirm the upstream release naming pattern for both architectures.
 - [x] Decide how to extract and repackage the upstream desktop RPM contents in a COPR-friendly way.
+- [x] Disable strip-related RPM BRP steps for `open-code` so the bundled `opencode-cli` payload is preserved during rebuilds.
 - [ ] Verify desktop integration details such as icons, desktop file, and runtime dependencies.
+- [x] Add a CLI smoke test so packaging fails if `opencode-cli` no longer behaves like OpenCode after rebuild.
 - [x] Defer any source-native desktop build investigation until after the repackage workflow works.
 
 ## CI and local validation

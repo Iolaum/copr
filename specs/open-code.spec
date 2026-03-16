@@ -1,9 +1,12 @@
 %global debug_package %{nil}
+%global __brp_strip %{nil}
+%global __brp_strip_lto %{nil}
+%global __brp_strip_comment_note %{nil}
 
 Name: open-code
 # renovate: datasource=github-releases depName=anomalyco/opencode
 Version: 1.2.27
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: The open source AI coding agent
 
 License: MIT
@@ -37,6 +40,14 @@ install -Dpm 0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 test -x usr/bin/OpenCode
 test -x usr/bin/opencode-cli
 desktop-file-validate usr/share/applications/OpenCode.desktop
+test "$(%{buildroot}%{_bindir}/opencode-cli --version)" = "%{version}"
+case "$(%{buildroot}%{_bindir}/opencode-cli --help 2>&1)" in \
+  *"opencode attach <url>"*) ;; \
+  *)
+    printf '%s\n' 'packaged opencode-cli no longer exposes the expected OpenCode CLI help output' >&2
+    exit 1
+    ;;
+esac
 
 %files
 %license %{_licensedir}/%{name}/LICENSE
@@ -48,4 +59,6 @@ desktop-file-validate usr/share/applications/OpenCode.desktop
 %{_datadir}/icons/hicolor/32x32/apps/OpenCode.png
 
 %changelog
-%autochangelog
+* Mon Mar 16 2026 Nikos <14947634+Iolaum@users.noreply.github.com> - 1.2.27-2
+- disable RPM strip/post-processing steps that truncate the bundled OpenCode CLI payload
+- add CLI smoke checks so builds fail if the packaged binary falls back to Bun behavior

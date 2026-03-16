@@ -89,6 +89,12 @@ Project page:
 
 This approach is chosen because it matches the current local workflow of consuming upstream release artifacts and publishing them as installable packages, while moving repository generation and hosting into COPR.
 
+Packaging note:
+
+- `open-code` disables Fedora RPM strip-related BRP post-processing during rebuilds
+- this is required because the upstream `opencode-cli` binary carries bundled payload data that gets truncated by default strip steps
+- the spec includes smoke checks to verify the packaged CLI still reports the expected OpenCode version and help output
+
 ## Intended repository layout
 
 The repository is expected to grow into a small packaging repo with files such as:
