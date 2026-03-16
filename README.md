@@ -12,6 +12,7 @@ The active COPR project is:
 Current published package status:
 
 - `bun` has been built successfully for `fedora-43-x86_64`
+- `open-code` has been built successfully for `fedora-43-x86_64`
 
 ## Scope
 
@@ -42,12 +43,12 @@ The initial package set is:
 
 ### bun
 
-`bun` will be packaged from upstream GitHub release binaries.
+`bun` is packaged from upstream GitHub release binaries.
 
 - primary architecture: `x86_64`
-- secondary architecture: `aarch64`
+- secondary architecture: `aarch64` is planned but not yet enabled
 - `x86_64` will use the optimized upstream Linux `x64` release, not the baseline build
-- `aarch64` will use the standard upstream Linux ARM64 release
+- `aarch64` will use the standard upstream Linux ARM64 release once support is added
 
 This favors performance on modern `x86_64` systems over backward compatibility with older CPUs.
 
@@ -62,6 +63,7 @@ Install on Fedora:
 ```bash
 sudo dnf copr enable iolaum/aitoolkit
 sudo dnf install bun
+bun --version
 ```
 
 or in Fedora Silverblue:
@@ -71,6 +73,8 @@ sudo curl -Lo /etc/yum.repos.d/iolaum-aitoolkit.repo \
   https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/repo/fedora-$(rpm -E %fedora)/iolaum-aitoolkit-fedora-$(rpm -E %fedora).repo
 sudo rpm-ostree install bun
 ```
+
+For Silverblue and related rpm-ostree systems, reboot into the new deployment or start a new shell session before verifying the install with `bun --version`.
 
 Project page:
 
@@ -83,7 +87,7 @@ Project page:
 - package name in this repository and in RPM metadata should be `open-code`
 - initial approach: repackage the upstream desktop `.rpm` release
 - primary architecture: `x86_64`
-- secondary architecture: `aarch64`
+- secondary architecture: `aarch64` is planned but not yet enabled
 - preserve the upstream desktop application payload as-is for the first version
 - preserve the bundled `opencode-cli` binary
 
@@ -95,12 +99,26 @@ Packaging note:
 - this is required because the upstream `opencode-cli` binary carries bundled payload data that gets truncated by default strip steps
 - the spec includes smoke checks to verify the packaged CLI still reports the expected OpenCode version and help output
 
+Install on Fedora:
+
+```bash
+sudo dnf copr enable iolaum/aitoolkit
+sudo dnf install open-code
+opencode-cli --version
+```
+
+Desktop verification after install:
+
+- confirm `OpenCode` appears in the desktop launcher
+- launch `OpenCode` once to verify the desktop entry, icons, and bundled runtime work as expected
+
 ## Intended repository layout
 
 The repository is expected to grow into a small packaging repo with files such as:
 
 - `specs/bun.spec`
 - `specs/open-code.spec`
+- `docs/developer.md`
 - `.github/workflows/check.yml`
 - `renovate.json`
 - `PLAN.md`
@@ -110,11 +128,26 @@ The repository is expected to grow into a small packaging repo with files such a
 The intended workflow is:
 
 1. update spec files in this repository
-2. validate them in CI with `rpmlint`, source fetching, and RPM builds
-3. configure COPR SCM packages to build directly from this repository
-4. let COPR generate and host repository metadata for Fedora users
+2. let Renovate propose `Version:` bumps for annotated spec files when supported upstream releases change
+3. validate changes in CI with `rpmlint`, source fetching, and RPM builds
+4. review and merge the resulting pull request
+5. configure COPR SCM packages to build directly from this repository
+6. let COPR generate and host repository metadata for Fedora users
+7. verify the published package in COPR and test installation from a Fedora system
+
+This repository uses the Renovate GitHub App from Mend (`https://github.com/apps/renovate`) to automate supported package version updates.
+Maintainer-facing notes for Renovate and related workflow details are documented in `docs/developer.md`.
 
 This replaces the local workflow of downloading release files, renaming them manually, and running `createrepo_c` by hand.
+
+For routine package updates:
+
+1. wait for Renovate to open a pull request for supported upstream releases, or update the spec manually when needed
+2. run local validation or open a pull request and let CI validate the change
+3. review whether the change is a straightforward `Version:` bump or also needs packaging adjustments
+4. trigger or wait for the COPR SCM rebuild for the updated package
+5. confirm the new build appears in the expected Fedora chroot
+6. install or upgrade from the COPR repository and verify the packaged application behavior
 
 ## Local validation
 
@@ -124,6 +157,8 @@ The current validation flow is:
 
 ```bash
 rpmlint specs/ --strict
-spectool -Rg specs/*.spec
-rpmbuild -ba specs/*.spec
+for file in specs/*.spec; do
+  spectool -Rg "$file"
+  rpmbuild -ba "$file"
+done
 ```

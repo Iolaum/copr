@@ -9,7 +9,8 @@ This checklist captures the initial plan for turning this repository into the so
 - [x] Add `specs/open-code.spec`.
 - [x] Add a repository license file.
 - [x] Add a GitHub Actions workflow at `.github/workflows/check.yml`.
-- [ ] Add `renovate.json` for version update automation.
+- [x] Add `docs/developer.md` for maintainer notes.
+- [x] Add `renovate.json` for version update automation.
 
 ## Scope and policy
 
@@ -57,7 +58,7 @@ This checklist captures the initial plan for turning this repository into the so
 - [x] Create a COPR project for this repository.
 - [x] Enable the desired Fedora chroots.
 - [x] Add an SCM package for `bun`.
-- [ ] Add an SCM package for `open-code`.
+- [x] Add an SCM package for `open-code`.
 - [x] Configure each SCM package to point at this git repository.
 - [x] Set the correct spec path for each package in COPR.
 - [ ] Enable auto-rebuilds or webhook-triggered rebuilds where appropriate.
@@ -67,13 +68,14 @@ This checklist captures the initial plan for turning this repository into the so
 
 - [x] Implement `bun` for `x86_64` first.
 - [ ] Add `bun` for `aarch64`.
-- [ ] Implement `open-code` for `x86_64`.
+- [x] Implement `open-code` for `x86_64`.
 - [ ] Add `open-code` for `aarch64`.
 - [x] Test installation from the COPR repo on Fedora systems.
 
 ## Follow-up documentation
 
 - [x] Add package-specific notes to `README.md` once the first specs exist.
-- [ ] Document how version bumps should be performed.
+- [x] Document how version bumps should be performed.
+- [x] Document Renovate app usage and maintainer references.
 - [x] Document how users enable the resulting COPR repository.
 - [x] Document known limitations for CPU architecture and upstream packaging choices.

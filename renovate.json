@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["bun\\.spec$"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+Version:\\s+(?<currentValue>.*)"
+      ],
+      "extractVersionTemplate": "^bun-v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["\\.spec$"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+Version:\\s+(?<currentValue>.*)"
+      ]
+    }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
+  ]
+}
