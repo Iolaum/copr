@@ -84,6 +84,8 @@ Project page:
 - initial approach: repackage the upstream desktop `.rpm` release
 - primary architecture: `x86_64`
 - secondary architecture: `aarch64`
+- preserve the upstream desktop application payload as-is for the first version
+- preserve the bundled `opencode-cli` binary
 
 This approach is chosen because it matches the current local workflow of consuming upstream release artifacts and publishing them as installable packages, while moving repository generation and hosting into COPR.
 

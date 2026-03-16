@@ -6,7 +6,7 @@ This checklist captures the initial plan for turning this repository into the so
 
 - [x] Create a `specs/` directory for RPM spec files.
 - [x] Add `specs/bun.spec`.
-- [ ] Add `specs/open-code.spec`.
+- [x] Add `specs/open-code.spec`.
 - [x] Add a repository license file.
 - [x] Add a GitHub Actions workflow at `.github/workflows/check.yml`.
 - [ ] Add `renovate.json` for version update automation.
@@ -28,19 +28,19 @@ This checklist captures the initial plan for turning this repository into the so
 - [ ] Use the standard upstream Linux ARM64 build for `aarch64`.
 - [ ] Add `ExclusiveArch: x86_64 aarch64` to the spec.
 - [x] Document that the optimized `x86_64` build may require newer CPU features.
-- [ ] Validate that the package installs the Bun binary cleanly into `%{_bindir}`.
+- [x] Validate that the package installs the Bun binary cleanly into `%{_bindir}`.
 - [ ] Review Bun licensing and redistribution implications before publishing broadly.
 
 ## open-code packaging
 
-- [ ] Package the opencode desktop release under the RPM name `open-code`.
-- [ ] Start by repackaging the upstream desktop `.rpm` release.
-- [ ] Support `x86_64` as the primary architecture.
+- [x] Package the opencode desktop release under the RPM name `open-code`.
+- [x] Start by repackaging the upstream desktop `.rpm` release.
+- [x] Support `x86_64` as the primary architecture.
 - [ ] Support `aarch64` as the secondary architecture.
 - [ ] Confirm the upstream release naming pattern for both architectures.
-- [ ] Decide how to extract and repackage the upstream desktop RPM contents in a COPR-friendly way.
+- [x] Decide how to extract and repackage the upstream desktop RPM contents in a COPR-friendly way.
 - [ ] Verify desktop integration details such as icons, desktop file, and runtime dependencies.
-- [ ] Defer any source-native desktop build investigation until after the repackage workflow works.
+- [x] Defer any source-native desktop build investigation until after the repackage workflow works.
 
 ## CI and local validation
 
@@ -67,7 +67,7 @@ This checklist captures the initial plan for turning this repository into the so
 - [ ] Add `bun` for `aarch64`.
 - [ ] Implement `open-code` for `x86_64`.
 - [ ] Add `open-code` for `aarch64`.
-- [ ] Test installation from the COPR repo on Fedora systems.
+- [x] Test installation from the COPR repo on Fedora systems.
 
 ## Follow-up documentation
 
