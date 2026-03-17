@@ -131,9 +131,12 @@ The intended workflow is:
 2. let Renovate propose `Version:` bumps for annotated spec files when supported upstream releases change
 3. validate changes in CI with `rpmlint`, source fetching, and RPM builds
 4. review and merge the resulting pull request
-5. configure COPR SCM packages to build directly from this repository
-6. let COPR generate and host repository metadata for Fedora users
-7. verify the published package in COPR and test installation from a Fedora system
+5. configure COPR packages to build from this repository with source type `SCM`, clone URL set to this GitHub repository, and `Committish` set to `main`
+6. set the package spec path and subdirectory fields to match this repository layout
+7. enable `Webhook rebuild` for each COPR SCM package
+8. add the COPR webhook URL to the GitHub repository webhook settings with content type `application/json`
+9. let COPR rebuild from new commits on `main`, generate and host repository metadata for Fedora users, and publish the updated package
+10. verify the published package in COPR and test installation from a Fedora system
 
 This repository uses the Renovate GitHub App from Mend (`https://github.com/apps/renovate`) to automate supported package version updates.
 Maintainer-facing notes for Renovate and related workflow details are documented in `docs/developer.md`.
@@ -145,9 +148,23 @@ For routine package updates:
 1. wait for Renovate to open a pull request for supported upstream releases, or update the spec manually when needed
 2. run local validation or open a pull request and let CI validate the change
 3. review whether the change is a straightforward `Version:` bump or also needs packaging adjustments
-4. trigger or wait for the COPR SCM rebuild for the updated package
-5. confirm the new build appears in the expected Fedora chroot
-6. install or upgrade from the COPR repository and verify the packaged application behavior
+4. merge the change to `main` so GitHub sends the webhook event to COPR
+5. confirm that COPR starts a new SCM build from `main` for the updated package
+6. confirm the new build appears in the expected Fedora chroot
+7. install or upgrade from the COPR repository and verify the packaged application behavior
+
+For automatic COPR rebuilds from GitHub:
+
+1. open the package configuration in the COPR project
+2. set `Source Type` to `SCM`
+3. set `Clone URL` to the GitHub repository URL
+4. set `Committish` to `main`
+5. set the spec path and subdirectory fields for the package as needed
+6. enable `Webhook rebuild`
+7. copy the webhook URL shown by COPR
+8. add that URL in GitHub under repository `Settings` -> `Webhooks`
+9. set the GitHub webhook content type to `application/json`
+10. save the webhook and verify that a new commit to `main` triggers a COPR rebuild
 
 ## Local validation
 
