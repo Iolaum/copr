@@ -11,7 +11,7 @@ jobs:
   check:
     name: check
     runs-on: ubuntu-24.04
-    container: fedora:43
+    container: fedora:45
     steps:
       - uses: actions/checkout@v6
 
