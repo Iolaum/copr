@@ -4,10 +4,7 @@ This repository contains the packaging metadata and automation needed to publish
 
 ## Current status
 
-The active COPR project is:
-
-- `iolaum/aitoolkit`
-- `https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/`
+The COPR project that publishes the available packages is [iolaum/aitoolkit](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/).
 
 Current published package status:
 
@@ -34,16 +31,10 @@ It is not used to:
 - commit upstream release tarballs or binaries into git
 - rebuild large upstream projects from source unless that becomes necessary later
 
-## Initial package scope
-
-The initial package set is:
-
-- `bun`
-- `open-code`
 
 ## Packaging strategy
 
-### bun
+### [bun](https://github.com/oven-sh/bun)
 
 `bun` is packaged from upstream GitHub release binaries.
 
@@ -82,9 +73,8 @@ Project page:
 
 - `https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/`
 
-### open-code
+### [OpenCode](https://github.com/anomalyco/opencode)
 
-`open-code` refers to the upstream opencode desktop application package.
 
 - package name in this repository and in RPM metadata should be `open-code`
 - initial approach: repackage the upstream desktop `.rpm` release
