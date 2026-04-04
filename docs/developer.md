@@ -12,6 +12,11 @@ The Renovate app from Mend is installed for this repository.
 This repository uses Renovate to propose version bumps for annotated RPM spec files.
 The current spec annotations live next to the `Version:` field and identify the upstream release source for each package.
 
+Each package owns its own directory so COPR subdirectory configuration, CI, and any future package-specific files stay isolated.
+
+- `bun/` with `bun/bun.spec`
+- `open-code/` with `open-code/open-code.spec`
+
 Renovate configuration lives in `renovate.json`.
 
 ## Maintainer expectations
@@ -28,8 +33,17 @@ COPR packages in this repository should be configured as SCM packages that build
 - set `Source Type` to `SCM`
 - set `Clone URL` to the repository URL
 - set `Committish` to `main`
-- set spec path and subdirectory fields for each package as needed
+- set the package `subdirectory` to its package folder, such as `bun/` or `open-code/`
+- set the spec path inside that folder, such as `bun/bun.spec` or `open-code/open-code.spec`
 - enable `Webhook rebuild` in the COPR package configuration
 - add the COPR webhook URL to the GitHub repository webhook settings with content type `application/json`
 
 The expected result is that each new commit to `main` triggers a COPR rebuild for the affected package configuration.
+
+## CI and local validation
+
+The CI workflow discovers package specs from the package directories rather than a shared `specs/` directory.
+
+- iterate over `*/*.spec`
+- install package build dependencies with `dnf builddep`
+- run `rpmlint`, `spectool -Rg`, and `rpmbuild -ba` for each spec file

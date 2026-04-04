@@ -16,15 +16,23 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Install RPM tooling
-        run: dnf install -y cpio git rpmlint rpmdevtools rpm-build unzip
+        run: dnf install -y git rpmlint rpmdevtools rpm-build 'dnf-command(builddep)'
+
+      - name: Install spec build dependencies
+        run: |
+          for file in */*.spec; do
+            dnf builddep -y "${file}"
+          done
 
       - name: Run rpmlint
-        run: rpmlint specs/ --strict
+        run: |
+          for file in */*.spec; do
+            rpmlint "${file}" --strict
+          done
 
       - name: Build RPMs
         run: |
-          for file in specs/*.spec; do
-            echo "Building ${file}..."
+          for file in */*.spec; do
             spectool -Rg "${file}"
             rpmbuild -ba "${file}"
           done
