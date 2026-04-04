@@ -11,8 +11,8 @@ The active COPR project is:
 
 Current published package status:
 
-- `bun` has been built successfully for `fedora-43-x86_64`
-- `open-code` has been built successfully for `fedora-43-x86_64`
+- `bun`: [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/bun/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/bun/)
+- `open-code`: [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/open-code/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/open-code/)
 
 ## Scope
 
