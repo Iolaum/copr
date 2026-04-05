@@ -47,7 +47,7 @@ PYTHONPATH=%{buildroot}%{python3_sitearch} python3 -c 'import hf_xet'
 
 %files -n python3-hf-xet
 %dir %{python3_sitearch}/hf_xet
-%{python3_sitearch}/hf_xet/__init__.py
+%pycached %{python3_sitearch}/hf_xet/__init__.py
 %{python3_sitearch}/hf_xet/hf_xet.abi3.so
 %dir %{python3_sitearch}/hf_xet-%{version}.dist-info
 %{python3_sitearch}/hf_xet-%{version}.dist-info/METADATA
