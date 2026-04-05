@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Install RPM tooling
-        run: dnf install -y dnf-plugins-core git rpmlint rpmdevtools rpm-build 'dnf-command(builddep)'
+        run: dnf install -y glibc-langpack-en dnf-plugins-core git rpmlint rpmdevtools rpm-build 'dnf-command(builddep)'
 
       - name: Enable COPR build dependencies
         run: dnf copr enable -y iolaum/aitoolkit
