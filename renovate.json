@@ -18,6 +18,13 @@
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+Version:\\s+(?<currentValue>.*)"
       ]
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["^python-hf-xet/python-hf-xet\\.spec$"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+Version:\\s+(?<currentValue>.*)"
+      ]
     }
   ],
   "packageRules": [

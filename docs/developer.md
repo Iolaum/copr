@@ -16,6 +16,7 @@ Each package owns its own directory so COPR subdirectory configuration, CI, and 
 
 - `bun/` with `bun/bun.spec`
 - `open-code/` with `open-code/open-code.spec`
+- `python-hf-xet/` with `python-hf-xet/python-hf-xet.spec`
 
 Renovate configuration lives in `renovate.json`.
 
@@ -33,8 +34,8 @@ COPR packages in this repository should be configured as SCM packages that build
 - set `Source Type` to `SCM`
 - set `Clone URL` to the repository URL
 - set `Committish` to `main`
-- set the package `subdirectory` to its package folder, such as `bun/` or `open-code/`
-- set the spec path inside that folder, such as `bun/bun.spec` or `open-code/open-code.spec`
+- set the package `subdirectory` to its package folder, such as `bun/`, `open-code/`, or `python-hf-xet/`
+- set the spec path inside that folder, such as `bun/bun.spec`, `open-code/open-code.spec`, or `python-hf-xet/python-hf-xet.spec`
 - enable `Webhook rebuild` in the COPR package configuration
 - add the COPR webhook URL to the GitHub repository webhook settings with content type `application/json`
 
@@ -47,3 +48,12 @@ The CI workflow discovers package specs from the package directories rather than
 - iterate over `*/*.spec`
 - install package build dependencies with `dnf builddep`
 - run `rpmlint`, `spectool -Rg`, and `rpmbuild -ba` for each spec file
+
+## Package-specific notes
+
+### python-hf-xet
+
+- keep the package naming Fedora-style: source package `python-hf-xet`, installable package `python3-hf-xet`
+- use the upstream Linux `cp37-abi3` wheel for standard Fedora builds on `x86_64`
+- do not switch to the upstream `cp313t` or `cp314t` wheels unless the packaging target explicitly changes to free-threaded Python
+- avoid switching this package to a source build unless the repository intentionally adopts a Rust-native packaging workflow for it

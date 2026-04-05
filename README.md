@@ -12,6 +12,7 @@ Current published package status:
 | --- | --- |
 | `bun` | [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/bun/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/bun/) |
 | `open-code` | [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/open-code/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/open-code/) |
+| `python-hf-xet` | [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/python-hf-xet/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/python-hf-xet/) |
 
 ## Scope
 
@@ -104,6 +105,30 @@ Desktop verification after install:
 - confirm `OpenCode` appears in the desktop launcher
 - launch `OpenCode` once to verify the desktop entry, icons, and bundled runtime work as expected
 
+### [hf-xet](https://github.com/huggingface/xet-core)
+
+- COPR package name: `python-hf-xet`
+- installable RPM name: `python3-hf-xet`
+- primary architecture: `x86_64`
+- package the upstream Linux `cp37-abi3` wheel for the standard Fedora CPython build
+- do not switch to the upstream `cp313t` or `cp314t` wheels for normal Fedora builds; those target free-threaded Python variants
+
+This approach keeps the repository aligned with its current binary-repackaging strategy while still selecting a Python-compatible upstream artifact across supported Fedora releases.
+
+Packaging note:
+
+- `hf-xet` is built upstream from Rust sources using maturin/PyO3
+- the published `cp37-abi3` wheel works across supported Fedora Python versions with the default interpreter
+- rebuilding from source would require a much heavier Rust workspace toolchain and is intentionally avoided here
+
+Install on Fedora:
+
+```bash
+sudo dnf copr enable iolaum/aitoolkit
+sudo dnf install python3-hf-xet
+python3 -c "import hf_xet"
+```
+
 ## Intended repository layout
 
 Each package now lives in its own directory so COPR package subdirectories, build separation, and any future package-specific metadata stay isolated.
@@ -112,6 +137,7 @@ The repository is expected to grow into a small packaging repo with files such a
 
 - `bun/bun.spec`
 - `open-code/open-code.spec`
+- `python-hf-xet/python-hf-xet.spec`
 - `docs/developer.md`
 - `.github/workflows/check.yml`
 - `renovate.json`
@@ -125,7 +151,7 @@ The intended workflow is:
 3. validate changes in CI with `rpmlint`, source fetching, and RPM builds
 4. review and merge the resulting pull request
 5. configure COPR packages to build from this repository with source type `SCM`, clone URL set to this GitHub repository, and `Committish` set to `main`
-6. set each package `subdirectory` to its package folder, such as `bun/` or `open-code/`, and set the matching spec path inside that folder
+6. set each package `subdirectory` to its package folder, such as `bun/`, `open-code/`, or `python-hf-xet/`, and set the matching spec path inside that folder
 7. enable `Webhook rebuild` for each COPR SCM package
 8. add the COPR webhook URL to the GitHub repository webhook settings with content type `application/json`
 9. let COPR rebuild from new commits on `main`, generate and host repository metadata for Fedora users, and publish the updated package
@@ -152,7 +178,7 @@ For automatic COPR rebuilds from GitHub:
 2. set `Source Type` to `SCM`
 3. set `Clone URL` to the GitHub repository URL
 4. set `Committish` to `main`
-5. set the package subdirectory to the package folder, such as `bun/` or `open-code/`, and set the matching spec path inside that folder
+5. set the package subdirectory to the package folder, such as `bun/`, `open-code/`, or `python-hf-xet/`, and set the matching spec path inside that folder
 6. enable `Webhook rebuild`
 7. copy the webhook URL shown by COPR
 8. add that URL in GitHub under repository `Settings` -> `Webhooks`
