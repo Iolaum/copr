@@ -4,7 +4,7 @@
 Name: python-hf-xet
 # renovate: datasource=github-releases depName=huggingface/xet-core
 Version: 1.4.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Python bindings for Hugging Face Xet storage
 
 License: Apache-2.0
@@ -25,6 +25,7 @@ This package republishes the upstream x86_64 abi3 wheel through COPR.
 %package -n python3-hf-xet
 Summary: %{summary}
 Requires: python3 >= 3.8
+Provides: python%{python3_version}dist(hf-xet) = %{version}
 Provides: python3dist(hf-xet) = %{version}
 
 %description -n python3-hf-xet
