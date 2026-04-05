@@ -25,6 +25,13 @@
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+Version:\\s+(?<currentValue>.*)"
       ]
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["^python-huggingface-hub/python-huggingface-hub\\.spec$"],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+Version:\\s+(?<currentValue>.*)"
+      ]
     }
   ],
   "packageRules": [

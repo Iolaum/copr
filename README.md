@@ -13,6 +13,7 @@ Current published package status:
 | `bun` | [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/bun/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/bun/) |
 | `open-code` | [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/open-code/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/open-code/) |
 | `python-hf-xet` | [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/python-hf-xet/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/python-hf-xet/) |
+| `python-huggingface-hub` | [![Copr build status](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/python-huggingface-hub/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/package/python-huggingface-hub/) |
 
 ## Scope
 
@@ -129,6 +130,31 @@ sudo dnf install python3-hf-xet
 python3 -c "import hf_xet"
 ```
 
+### [huggingface_hub](https://github.com/huggingface/huggingface_hub)
+
+- COPR package name: `python-huggingface-hub`
+- installable RPM name: `python3-huggingface-hub`
+- initial target architecture: `x86_64`
+- package the upstream PyPI source release
+- preserve the upstream `hf` and `tiny-agents` CLI entry points
+
+This approach keeps the repository aligned with its Python source-packaging workflow while relying on separately packaged Fedora or COPR dependencies for the components that upstream expects at runtime.
+
+Packaging note:
+
+- `huggingface_hub` depends on `hf-xet` on supported Linux architectures, so this package currently follows the repository's active `x86_64` target
+- `tiny-agents` is installed upstream unconditionally, so the package adds an explicit runtime dependency on `python3-mcp` to keep that CLI functional
+- the PyPI source release currently includes upstream tests, but this repository keeps `%check` to import and CLI smoke checks rather than running the full upstream test suite
+
+Install on Fedora:
+
+```bash
+sudo dnf copr enable iolaum/aitoolkit
+sudo dnf install python3-huggingface-hub
+python3 -c "import huggingface_hub"
+hf --help
+```
+
 ## Intended repository layout
 
 Each package now lives in its own directory so COPR package subdirectories, build separation, and any future package-specific metadata stay isolated.
@@ -138,6 +164,7 @@ The repository is expected to grow into a small packaging repo with files such a
 - `bun/bun.spec`
 - `open-code/open-code.spec`
 - `python-hf-xet/python-hf-xet.spec`
+- `python-huggingface-hub/python-huggingface-hub.spec`
 - `docs/developer.md`
 - `.github/workflows/check.yml`
 - `renovate.json`
@@ -151,7 +178,7 @@ The intended workflow is:
 3. validate changes in CI with `rpmlint`, source fetching, and RPM builds
 4. review and merge the resulting pull request
 5. configure COPR packages to build from this repository with source type `SCM`, clone URL set to this GitHub repository, and `Committish` set to `main`
-6. set each package `subdirectory` to its package folder, such as `bun/`, `open-code/`, or `python-hf-xet/`, and set the matching spec path inside that folder
+6. set each package `subdirectory` to its package folder, such as `bun/`, `open-code/`, `python-hf-xet/`, or `python-huggingface-hub/`, and set the matching spec path inside that folder
 7. enable `Webhook rebuild` for each COPR SCM package
 8. add the COPR webhook URL to the GitHub repository webhook settings with content type `application/json`
 9. let COPR rebuild from new commits on `main`, generate and host repository metadata for Fedora users, and publish the updated package
@@ -178,7 +205,7 @@ For automatic COPR rebuilds from GitHub:
 2. set `Source Type` to `SCM`
 3. set `Clone URL` to the GitHub repository URL
 4. set `Committish` to `main`
-5. set the package subdirectory to the package folder, such as `bun/`, `open-code/`, or `python-hf-xet/`, and set the matching spec path inside that folder
+5. set the package subdirectory to the package folder, such as `bun/`, `open-code/`, `python-hf-xet/`, or `python-huggingface-hub/`, and set the matching spec path inside that folder
 6. enable `Webhook rebuild`
 7. copy the webhook URL shown by COPR
 8. add that URL in GitHub under repository `Settings` -> `Webhooks`
