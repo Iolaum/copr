@@ -12,6 +12,9 @@ jobs:
     name: check
     runs-on: ubuntu-24.04
     container: fedora:43
+    env:
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
     steps:
       - uses: actions/checkout@v6
 
