@@ -2,7 +2,7 @@
 
 Name:           python-huggingface-hub
 # renovate: datasource=pypi depName=huggingface_hub
-Version:        1.9.1
+Version:        1.9.2
 Release:        1%{?dist}
 Summary:        Client library to handle repos on the Hugging Face Hub
 
