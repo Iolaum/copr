@@ -60,6 +60,7 @@ test -x %{buildroot}%{_bindir}/tiny-agents
 %license LICENSE
 %doc README.md
 %{_bindir}/hf
+%{_bindir}/huggingface-cli
 %{_bindir}/tiny-agents
 
 
