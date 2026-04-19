@@ -2,7 +2,7 @@
 
 Name:           python-huggingface-hub
 # renovate: datasource=pypi depName=huggingface_hub
-Version:        1.9.2
+Version:        1.11.0
 Release:        1%{?dist}
 Summary:        Client library to handle repos on the Hugging Face Hub
 
@@ -60,6 +60,7 @@ test -x %{buildroot}%{_bindir}/tiny-agents
 %license LICENSE
 %doc README.md
 %{_bindir}/hf
+%{_bindir}/huggingface-cli
 %{_bindir}/tiny-agents
 
 
