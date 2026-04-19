@@ -46,10 +46,12 @@ The expected result is that each new commit to `main` triggers a COPR rebuild fo
 
 The CI workflow discovers package specs from the package directories rather than a shared `specs/` directory.
 
+- prefer running local validation in a temporary Fedora container with Podman rather than installing RPM tooling on the host
+- start the container in an existing workdir such as `/root`, copy the repository into `/work`, and run validation from `/work`
 - enable the published `iolaum/aitoolkit` COPR repository before resolving build dependencies
-- iterate over `*/*.spec`
-- install package build dependencies with `dnf builddep`
-- run `rpmlint`, `spectool -Rg`, and `rpmbuild -ba` for each spec file
+- full validation iterates over `*/*.spec`
+- targeted validation can replace the loop with a single spec path when working on one package
+- run `dnf builddep`, `rpmlint`, `spectool -Rg`, and `rpmbuild -ba` for each validated spec file
 
 ## Package-specific notes
 

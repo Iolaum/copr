@@ -64,14 +64,17 @@ Use a command like:
 ```bash
 podman run --rm -i \
   -v "$PWD":/src:ro,Z \
-  --workdir /work \
+  --workdir /root \
   fedora:43 \
   bash <<'EOF'
 set -euo pipefail
 
-dnf install -y git rpmlint rpmdevtools rpm-build 'dnf-command(builddep)'
+dnf install -y glibc-langpack-en dnf-plugins-core git rpmlint rpmdevtools rpm-build 'dnf-command(builddep)'
+dnf copr enable -y iolaum/aitoolkit
+
 mkdir -p /work
 cp -a /src/. /work/
+cd /work
 
 for file in */*.spec; do
   dnf builddep -y "$file"
@@ -81,6 +84,8 @@ for file in */*.spec; do
 done
 EOF
 ```
+
+For a single package, use the same container setup and replace the loop with the target spec path.
 
 Notes:
 

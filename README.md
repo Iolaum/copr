@@ -216,12 +216,30 @@ For automatic COPR rebuilds from GitHub:
 
 The repository uses GitHub Actions to validate spec changes.
 
-The current validation flow is:
+Prefer running the same checks in a temporary Fedora container with Podman so the host worktree stays clean and the toolchain stays close to CI.
 
 ```bash
+podman run --rm -i \
+  -v "$PWD":/src:ro,Z \
+  --workdir /root \
+  fedora:43 \
+  bash <<'EOF'
+set -euo pipefail
+
+dnf install -y glibc-langpack-en dnf-plugins-core git rpmlint rpmdevtools rpm-build 'dnf-command(builddep)'
+dnf copr enable -y iolaum/aitoolkit
+
+mkdir -p /work
+cp -a /src/. /work/
+cd /work
+
 for file in */*.spec; do
+  dnf builddep -y "$file"
   rpmlint "$file" --strict
   spectool -Rg "$file"
   rpmbuild -ba "$file"
 done
+EOF
 ```
+
+For a single package, use the same container setup and replace the loop with the spec path you want to validate.
