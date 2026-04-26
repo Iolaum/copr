@@ -15,6 +15,7 @@ The current spec annotations live next to the `Version:` field and identify the 
 Each package owns its own directory so COPR subdirectory configuration, CI, and any future package-specific files stay isolated.
 
 - `bun/` with `bun/bun.spec`
+- `llm-wiki/` with `llm-wiki/llm-wiki.spec`
 - `open-code/` with `open-code/open-code.spec`
 - `python-hf-xet/` with `python-hf-xet/python-hf-xet.spec`
 - `python-huggingface-hub/` with `python-huggingface-hub/python-huggingface-hub.spec`
@@ -35,8 +36,8 @@ COPR packages in this repository should be configured as SCM packages that build
 - set `Source Type` to `SCM`
 - set `Clone URL` to the repository URL
 - set `Committish` to `main`
-- set the package `subdirectory` to its package folder, such as `bun/`, `open-code/`, `python-hf-xet/`, or `python-huggingface-hub/`
-- set the spec path inside that folder, such as `bun/bun.spec`, `open-code/open-code.spec`, `python-hf-xet/python-hf-xet.spec`, or `python-huggingface-hub/python-huggingface-hub.spec`
+- set the package `subdirectory` to its package folder, such as `bun/`, `llm-wiki/`, `open-code/`, `python-hf-xet/`, or `python-huggingface-hub/`
+- set the spec path inside that folder, such as `bun/bun.spec`, `llm-wiki/llm-wiki.spec`, `open-code/open-code.spec`, `python-hf-xet/python-hf-xet.spec`, or `python-huggingface-hub/python-huggingface-hub.spec`
 - enable `Webhook rebuild` in the COPR package configuration
 - add the COPR webhook URL to the GitHub repository webhook settings with content type `application/json`
 
@@ -54,6 +55,15 @@ The CI workflow discovers package specs from the package directories rather than
 - run `dnf builddep`, `rpmlint`, `spectool -Rg`, and `rpmbuild -ba` for each validated spec file
 
 ## Package-specific notes
+
+### llm-wiki
+
+- track upstream releases from `nashsu/llm_wiki`, not a fork
+- repackage the upstream Tauri-generated `LLM.Wiki-<version>-1.x86_64.rpm` release artifact
+- keep the package scoped to `x86_64` unless upstream release artifacts and repository architecture policy change together
+- preserve the upstream desktop payload and bundled `libpdfium.so` resource as-is
+- do not switch to rebuilding the Rust, Node, and Tauri application from source unless the repository intentionally adopts that heavier packaging workflow
+- keep strip-related BRP post-processing disabled unless the rebuilt package is proven to preserve the Tauri binary and bundled PDFium resource correctly
 
 ### python-hf-xet
 
