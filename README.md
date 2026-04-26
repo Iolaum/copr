@@ -37,73 +37,6 @@ It is not used to:
 
 ## Packaging strategy
 
-### [bun](https://github.com/oven-sh/bun)
-
-`bun` is packaged from upstream GitHub release binaries.
-
-- primary architecture: `x86_64`
-- secondary architecture: `aarch64` is planned but not yet enabled
-- `x86_64` will use the optimized upstream Linux `x64` release, not the baseline build
-- `aarch64` will use the standard upstream Linux ARM64 release once support is added
-
-This favors performance on modern `x86_64` systems over backward compatibility with older CPUs.
-
-Current Bun deployment status:
-
-- COPR package name: `bun`
-- current working chroot: `fedora-43-x86_64`
-- source package method: COPR SCM build from this repository
-
-Install on Fedora:
-
-```bash
-sudo dnf copr enable iolaum/aitoolkit
-sudo dnf install bun
-bun --version
-```
-
-or in Fedora Silverblue:
-
-```
-sudo curl -Lo /etc/yum.repos.d/iolaum-aitoolkit.repo \
-  https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/repo/fedora-$(rpm -E %fedora)/iolaum-aitoolkit-fedora-$(rpm -E %fedora).repo
-sudo rpm-ostree install bun
-```
-
-For Silverblue and related rpm-ostree systems, reboot into the new deployment or start a new shell session before verifying the install with `bun --version`.
-
-Project page:
-
-- `https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/`
-
-### [LLM Wiki](https://github.com/nashsu/llm_wiki)
-
-- package name in this repository and in RPM metadata should be `llm-wiki`
-- initial approach: repackage the upstream Tauri-generated `.rpm` release
-- primary architecture: `x86_64`
-- preserve the upstream desktop application payload as-is for the first version
-- preserve the bundled `libpdfium.so` resource shipped by upstream
-
-This approach keeps the package aligned with upstream's existing release process while letting COPR publish an installable Fedora repository for the RPM artifact.
-
-Packaging note:
-
-- `llm-wiki` disables Fedora RPM strip-related BRP post-processing during rebuilds
-- this avoids mutating the upstream Tauri binary or bundled `libpdfium.so` payload while republishing the upstream RPM contents
-- the spec includes smoke checks for the executable, desktop file, and bundled PDFium resource
-
-Install on Fedora:
-
-```bash
-sudo dnf copr enable iolaum/aitoolkit
-sudo dnf install llm-wiki
-```
-
-Desktop verification after install:
-
-- confirm `LLM Wiki` appears in the desktop launcher
-- launch `LLM Wiki` once to verify the desktop entry, icons, bundled runtime, and PDF support work as expected
-
 ### [OpenCode](https://github.com/anomalyco/opencode)
 
 
@@ -134,6 +67,34 @@ Desktop verification after install:
 
 - confirm `OpenCode` appears in the desktop launcher
 - launch `OpenCode` once to verify the desktop entry, icons, and bundled runtime work as expected
+
+### [LLM Wiki](https://github.com/nashsu/llm_wiki)
+
+- package name in this repository and in RPM metadata should be `llm-wiki`
+- initial approach: repackage the upstream Tauri-generated `.rpm` release
+- primary architecture: `x86_64`
+- preserve the upstream desktop application payload as-is for the first version
+- preserve the bundled `libpdfium.so` resource shipped by upstream
+
+This approach keeps the package aligned with upstream's existing release process while letting COPR publish an installable Fedora repository for the RPM artifact.
+
+Packaging note:
+
+- `llm-wiki` disables Fedora RPM strip-related BRP post-processing during rebuilds
+- this avoids mutating the upstream Tauri binary or bundled `libpdfium.so` payload while republishing the upstream RPM contents
+- the spec includes smoke checks for the executable, desktop file, and bundled PDFium resource
+
+Install on Fedora:
+
+```bash
+sudo dnf copr enable iolaum/aitoolkit
+sudo dnf install llm-wiki
+```
+
+Desktop verification after install:
+
+- confirm `LLM Wiki` appears in the desktop launcher
+- launch `LLM Wiki` once to verify the desktop entry, icons, bundled runtime, and PDF support work as expected
 
 ### [hf-xet](https://github.com/huggingface/xet-core)
 
@@ -183,6 +144,45 @@ sudo dnf install python3-huggingface-hub
 python3 -c "import huggingface_hub"
 hf --help
 ```
+
+### [bun](https://github.com/oven-sh/bun)
+
+`bun` is packaged from upstream GitHub release binaries.
+
+- primary architecture: `x86_64`
+- secondary architecture: `aarch64` is planned but not yet enabled
+- `x86_64` will use the optimized upstream Linux `x64` release, not the baseline build
+- `aarch64` will use the standard upstream Linux ARM64 release once support is added
+
+This favors performance on modern `x86_64` systems over backward compatibility with older CPUs.
+
+Current Bun deployment status:
+
+- COPR package name: `bun`
+- current working chroot: `fedora-43-x86_64`
+- source package method: COPR SCM build from this repository
+
+Install on Fedora:
+
+```bash
+sudo dnf copr enable iolaum/aitoolkit
+sudo dnf install bun
+bun --version
+```
+
+or in Fedora Silverblue:
+
+```
+sudo curl -Lo /etc/yum.repos.d/iolaum-aitoolkit.repo \
+  https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/repo/fedora-$(rpm -E %fedora)/iolaum-aitoolkit-fedora-$(rpm -E %fedora).repo
+sudo rpm-ostree install bun
+```
+
+For Silverblue and related rpm-ostree systems, reboot into the new deployment or start a new shell session before verifying the install with `bun --version`.
+
+Project page:
+
+- `https://copr.fedorainfracloud.org/coprs/iolaum/aitoolkit/`
 
 ## Intended repository layout
 
