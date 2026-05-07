@@ -41,18 +41,18 @@ It is not used to:
 
 
 - package name in this repository and in RPM metadata should be `open-code`
-- initial approach: repackage the upstream desktop `.rpm` release
+- approach: repackage the upstream desktop `.rpm` release and install the matching standalone CLI release artifact
 - primary architecture: `x86_64`
 - secondary architecture: `aarch64` is planned but not yet enabled
-- preserve the upstream desktop application payload as-is for the first version
-- preserve the bundled `opencode-cli` binary
+- preserve the upstream desktop application payload as-is
+- preserve the packaged `opencode-cli` command
 
 This approach is chosen because it matches the current local workflow of consuming upstream release artifacts and publishing them as installable packages, while moving repository generation and hosting into COPR.
 
 Packaging note:
 
 - `open-code` disables Fedora RPM strip-related BRP post-processing during rebuilds
-- this is required because the upstream `opencode-cli` binary carries bundled payload data that gets truncated by default strip steps
+- this protects upstream-provided binary payloads from being modified during repackaging
 - the spec includes smoke checks to verify the packaged CLI still reports the expected OpenCode version and help output
 
 Install on Fedora:
