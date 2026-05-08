@@ -9,7 +9,7 @@ Summary: Python bindings for Hugging Face Xet storage
 
 License: Apache-2.0
 URL: https://github.com/huggingface/xet-core
-Source0: %{url}/releases/download/v%{version}/%{wheel_name}
+Source0: %{url}/releases/download/%{version}/%{wheel_name}
 
 ExclusiveArch: x86_64
 
