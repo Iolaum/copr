@@ -56,6 +56,15 @@ The CI workflow discovers package specs from the package directories rather than
 
 ## Package-specific notes
 
+### open-code
+
+- track upstream releases from `anomalyco/opencode`
+- repackage the upstream `opencode-desktop-linux-x86_64.rpm` desktop artifact and install the matching `opencode-linux-x64.tar.gz` CLI artifact as `opencode-cli`
+- keep the package scoped to `x86_64` unless upstream release artifacts and repository architecture policy change together
+- preserve the upstream desktop payload under `/opt/OpenCode` as-is
+- keep CLI smoke checks meaningful so builds fail if the packaged CLI no longer reports the expected version or help output
+- keep strip-related BRP post-processing disabled unless the rebuilt package is proven to preserve the upstream binary payloads correctly
+
 ### llm-wiki
 
 - track upstream releases from `nashsu/llm_wiki`, not a fork
