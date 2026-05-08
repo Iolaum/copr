@@ -3,13 +3,13 @@
 
 Name: python-hf-xet
 # renovate: datasource=github-releases depName=huggingface/xet-core
-Version: 1.4.3
+Version: 1.5.0
 Release: 2%{?dist}
 Summary: Python bindings for Hugging Face Xet storage
 
 License: Apache-2.0
 URL: https://github.com/huggingface/xet-core
-Source0: %{url}/releases/download/v%{version}/%{wheel_name}
+Source0: %{url}/releases/download/%{version}/%{wheel_name}
 
 ExclusiveArch: x86_64
 
