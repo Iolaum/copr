@@ -7,7 +7,7 @@
 
 Name: open-code
 # renovate: datasource=github-releases depName=anomalyco/opencode
-Version: 1.16.2
+Version: 1.17.6
 Release: 1%{?dist}
 Summary: The open source AI coding agent
 
@@ -45,9 +45,10 @@ install -Dpm 0755 cli/opencode %{buildroot}%{_bindir}/opencode-cli
 install -Dpm 0644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 
 %check
-test -x opt/OpenCode/@opencode-aidesktop
+test -x opt/OpenCode/ai.opencode.desktop
 test -x cli/opencode
-desktop-file-validate usr/share/applications/@opencode-aidesktop.desktop
+desktop-file-validate usr/share/applications/ai.opencode.desktop.desktop
+desktop-file-validate usr/share/applications/opencode-desktop.desktop
 test "$(%{buildroot}%{_bindir}/opencode-cli --version)" = "%{version}"
 case "$(%{buildroot}%{_bindir}/opencode-cli --help 2>&1)" in \
   *"opencode attach <url>"*) ;; \
@@ -60,8 +61,9 @@ esac
 %files
 %license %{_licensedir}/%{name}/LICENSE
 %{_bindir}/opencode-cli
-%{_datadir}/applications/@opencode-aidesktop.desktop
-%{_datadir}/icons/hicolor/*/apps/@opencode-aidesktop.png
+%{_datadir}/applications/ai.opencode.desktop.desktop
+%{_datadir}/applications/opencode-desktop.desktop
+%{_datadir}/icons/hicolor/*/apps/ai.opencode.desktop.png
 /opt/OpenCode
 
 %changelog
