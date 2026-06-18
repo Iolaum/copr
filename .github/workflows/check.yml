@@ -16,7 +16,7 @@ jobs:
       LANG: C.UTF-8
       LC_ALL: C.UTF-8
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install RPM tooling
         run: dnf install -y glibc-langpack-en dnf-plugins-core git rpmlint rpmdevtools rpm-build 'dnf-command(builddep)'
