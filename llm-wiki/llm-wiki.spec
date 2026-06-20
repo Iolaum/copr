@@ -6,7 +6,7 @@
 
 Name: llm-wiki
 # renovate: datasource=github-releases depName=nashsu/llm_wiki
-Version: 0.4.23
+Version: 0.4.25
 Release: 1%{?dist}
 Summary: Personal knowledge base for LLM concepts
 
@@ -20,6 +20,8 @@ ExclusiveArch: x86_64
 BuildRequires: cpio
 BuildRequires: desktop-file-utils
 BuildRequires: rpm-build
+
+Requires: nodejs24
 
 %description
 LLM Wiki is a desktop personal knowledge base for LLM concepts.
@@ -45,13 +47,9 @@ desktop-file-validate "%{buildroot}%{_datadir}/applications/LLM Wiki.desktop"
 %files
 %license %{_licensedir}/%{name}/LICENSE
 %{_bindir}/llm-wiki
-%dir "/usr/lib/LLM Wiki"
-%dir "/usr/lib/LLM Wiki/pdfium"
-"/usr/lib/LLM Wiki/pdfium/libpdfium.so"
+"/usr/lib/LLM Wiki"
 "%{_datadir}/applications/LLM Wiki.desktop"
-%{_datadir}/icons/hicolor/128x128/apps/llm-wiki.png
-%{_datadir}/icons/hicolor/256x256@2/apps/llm-wiki.png
-%{_datadir}/icons/hicolor/32x32/apps/llm-wiki.png
+%{_datadir}/icons/hicolor/*/apps/llm-wiki.png
 
 %changelog
 %autochangelog
