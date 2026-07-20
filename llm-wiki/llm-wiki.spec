@@ -6,7 +6,7 @@
 
 Name: llm-wiki
 # renovate: datasource=github-releases depName=nashsu/llm_wiki
-Version: 0.6.4
+Version: 0.6.5
 Release: 1%{?dist}
 Summary: Personal knowledge base for LLM concepts
 
