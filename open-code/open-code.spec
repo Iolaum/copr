@@ -64,6 +64,7 @@ esac
 %{_datadir}/applications/ai.opencode.desktop.desktop
 %{_datadir}/applications/opencode-desktop.desktop
 %{_datadir}/icons/hicolor/*/apps/ai.opencode.desktop.png
+%{_metainfodir}/ai.opencode.desktop.metainfo.xml
 /opt/OpenCode
 
 %changelog
