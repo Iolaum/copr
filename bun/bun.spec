@@ -2,7 +2,7 @@
 
 Name: bun
 # renovate: datasource=github-releases depName=oven-sh/bun
-Version: 1.4.0
+Version: 1.4.1
 Release: 1%{?dist}
 Summary: Fast all-in-one JavaScript runtime and toolkit
 
